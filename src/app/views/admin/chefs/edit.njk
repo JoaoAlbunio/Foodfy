@@ -1,0 +1,74 @@
+{% extends "layout-admin.njk" %}
+
+{% block head %}
+  <title>Foodfy - Chef</title>
+{% endblock %}
+
+{% block content %}
+  <div class="edit-container">
+    <section class="edit"> 
+      <div class="form-head">
+        
+        <h1>Editando chef</h1>
+
+        <a class="cancelButton" href="/admin/chefs/{{chef.id}}">Cancelar</a>
+        
+        <form id="form-delete" method="post" action="/admin/chefs?_method=DELETE">
+          <input 
+            id="chefId"
+            type="hidden" 
+            name="id" 
+            value="{{chef.id}}">
+
+          <input 
+            type="hidden" 
+            name="avatarId"
+            value="{{avatar.id}}"
+          >  
+          <button type="submit">Deletar</button>
+        </form>
+        
+        <form id="formEdit" method="post" action="/admin/chefs?_method=PUT" enctype="multipart/form-data">
+          <button type="submit">Salvar chef</button>
+      </div>
+        
+          {% include "admin/chefs/chef-name-field.njk" %}
+
+          <div id="chef-avatar">
+            <div>Avatar</div>
+            <div class="avatar_url">
+              <input 
+                type="text"
+                name="avatar_url"
+                placeholder="{{avatar.src}}"
+              >
+            </div>
+            <div id="avatar-upload">
+              <input 
+                id="avatar-input"
+                type="file"
+                name="avatar"
+                accept="image/*"
+                value=""
+                >
+              <p>Enviar Avatar</p>
+            </div>
+          </div>
+
+          <input 
+            type="hidden"
+            name="id"
+            value="{{chef.id}}"
+          >
+
+          <input 
+            type="hidden"
+            name="fileId"
+            value="{{avatar.id}}"
+          >
+        </form>
+      
+    </section>
+  </div>  
+  
+{% endblock %}

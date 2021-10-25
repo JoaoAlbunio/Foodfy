@@ -1,0 +1,60 @@
+<section class="recipe-details">
+
+  <div class="gallery">
+    <div class="highlight">
+      {% if not files[0] %}
+        <img src="http://placehold.it/940x280?text=RECEITA SEM FOTO">
+      {% else %}
+        <img src="{{files[0].src}}" alt="{{files[0].name}}">
+      {% endif %}
+    </div>
+
+    <div class="gallery-preview">
+      {% for image in files %}
+        <img 
+          src="{{image.src}}" 
+          alt="{{image.name}}"
+          {% if loop.index0 == 0 %}
+          class="active"
+          {% endif %}
+          onclick="ImageGallery.setImage(event)"
+          >
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="recipe-info">
+    <h3>{{recipe.title}}</h3>
+    {% for chef in chefs %}
+      {% if chef.id == recipe.chef_id %}
+        <p>por {{ chef.name }}</p>
+      {% endif %}  
+    {% endfor %}
+  </div>
+</section>
+
+<div class="wrapper__recipe-details">
+  <h1>
+    Ingredientes
+    <div class="button ingredient">Esconder</div>
+  </h1>
+  <ul class="info ingredient">
+    {% for ingredient in recipe.ingredients %}
+      <li>{{ingredient}}</li>
+    {% endfor %}
+  </ul>
+  <h1>
+    Modo de preparo
+    <div class="button preparation">Esconder</div>
+  </h1>
+  <ul class="info preparation">
+    {% for preps in recipe.preparation %}
+      <li>{{preps}}</li>
+    {% endfor %}
+  </ul>
+  <h1>
+    Informações adicionais
+    <div class="button information">Esconder</div>
+  </h1>
+  <p class="info information">{{recipe.information}}</p>
+</div>

@@ -1,0 +1,16 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+  <title>Foodfy - Receitas</title>
+{% endblock %}
+
+{% block content %}
+  <div class="recipes-screen">
+
+    <section class="cards">
+        
+      {% include "screens/recipe-fields.njk" %}
+
+    </section>
+  </div>
+{% endblock %}

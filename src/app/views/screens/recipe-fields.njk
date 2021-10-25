@@ -1,0 +1,15 @@
+{% for recipe in recipes %}
+  <a href="/recipes/{{recipe.id}}" class="card">
+    <div class="card__image-container">
+      <div style="background-image: url({{recipe.src}});"></div>
+    </div>
+    <div class="card__info">
+      <h1>{{recipe.title}}</h1>
+      {% for chef in chefs %}
+        {% if chef.id == recipe.chef_id %}
+          <p>por {{chef.name}}</p>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </a>
+{% endfor %}

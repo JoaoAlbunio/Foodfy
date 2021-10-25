@@ -1,0 +1,15 @@
+{% extends "layout-admin.njk" %}
+
+{% block head %}
+  <title>Foodfy - Receita</title>
+{% endblock %}
+
+{% block content %}
+  <div class="recipes-container">
+    <div class="button-edit-container">
+      <h1>Receita: {{recipe.title}}</h1>
+      <a href="/admin/recipes/{{recipe.id}}/edit">Editar receita</a>
+    </div>
+    {% include "details-fields.njk" %}
+  </div>
+{% endblock %}

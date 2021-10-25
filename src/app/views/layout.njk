@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block head %}
+      <title>FoodFy</title>
+    {% endblock %}
+    <link rel="shortcut icon" href="/assets/chef.png" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/fystyles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" 
+    integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" 
+    crossorigin="anonymous"/>
+  </head>
+
+  <body>
+    <div class="header">
+      <header class="links">
+        <div class="links__image-container">
+          <a href="/foodfy"><img src="/assets/logo.png" alt="FoodFy" /></a>
+        </div>
+        <a href="/about">Sobre</a>
+        <a href="/recipes">Receitas</a>
+        <a href="/chefs">Chefs</a>
+        {% block filter %}{% endblock %}
+      </header>
+    </div>
+    
+    {% block content %}{% endblock %}
+
+    <footer>
+      <p>Todos direitos reservados, receitas FoodFy.</p>
+    </footer>
+
+  </body>
+  
+  <script src="/js/scripts.js"></script>
+</html>

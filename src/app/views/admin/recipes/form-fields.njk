@@ -1,0 +1,113 @@
+<div id="recipe-images">
+  <div>Imagem da receita</div>
+  <div>
+    <div id="images-upload">
+      <input 
+        id="images-input"
+        type="file"
+        name="images" 
+        multiple
+        accept="image/*"
+        onchange="ImagesUpload.handleFileInput(event)"
+      >
+
+      <i class="material-icons">add</i>
+    </div>
+    <div id="images-preview">
+      {% if files %}
+        {% for image in files %}
+          <div class="images" id="{{image.file_id}}">
+            <img src="{{image.src}}" alt="{{image.name}}">
+            <i class="material-icons"
+              onclick="ImagesUpload.removeOldImage(event)"
+            >delete</i>
+          </div>
+        {% endfor %}
+        <input type="hidden" name="removed_files">
+      {% endif %}
+    </div>  
+  </div>
+</div>
+
+<div id="selectOptions">
+  <div>Chef</div>
+  <div class="chefs-selection">
+    <select name="chef">
+      <option value="">Selecione um chef</option>
+      {% for chef in options %}
+        <option value="{{chef.id}}" {% if  chef.id == recipe.chef_id %} selected {% endif %}>{{chef.name}}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
+
+<div id="title">
+  <div>Título</div>
+  <div class="create-informations">
+    <input 
+      type="text"
+      name="title"
+      value="{{recipe.title}}">
+  </div>
+</div>
+
+<div id="ingredient" >
+  <div>Ingredientes</div>
+  {% if recipe %}
+    {% for ingredient in recipe.ingredients %}
+      <div class="ingredient ingredientButton">
+        <input 
+          type="text"
+          name="ingredients[]"
+          value="{{ingredient}}">
+        <button class="buttonDelete" type="button"><i class="fas fa-trash"></i></button>
+      </div>
+    {% endfor %}
+  {% else %} 
+      <div class="ingredient ingredientButton">
+        <input 
+          type="text"
+          name="ingredients[]"
+          value="">
+        <button class="buttonDelete" type="button"><i class="fas fa-trash"></i></button>
+      </div>
+  {% endif %}
+</div>
+<button id="addNewIngredient" type="button">Adicionar novo ingrediente</button>
+
+<div id="preparation" >
+  <div>Modo de preparo</div>
+  {% if recipe %}
+    {% for preparation in recipe.preparation %}
+      <div class="preparation preparationButton">
+        <input 
+          type="text"
+          name="preparation[]"
+          value="{{preparation}}">
+        <button class="buttonDelete" type="button"><i class="fas fa-trash"></i></button>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="preparation preparationButton">
+      <input 
+        type="text"
+        name="preparation[]"
+        value="">
+      <button class="buttonDelete" type="button"><i class="fas fa-trash"></i></button>
+    </div>
+  {% endif %}  
+</div>
+<button id="addNewStep" type="button">Adicionar novo passo</button>
+
+<div id="infoAdditional">
+  <div>Informações adicionais</div>
+  <div class="infoAdditional">
+    <textarea 
+      name="information" 
+      cols="30"   
+      rows="10"
+    >{{recipe.information}}</textarea>
+  </div>
+</div>
+
+

@@ -1,0 +1,28 @@
+{% extends "layout.njk" %}
+
+{% block filter %}
+  <form class="filter" action="search" method="get">
+    <input 
+      type="text"
+      name="filter"
+      value="{{filter}}"
+      placeholder="Buscar uma receita">
+    <button type="submit">Buscar</button>
+  </form>
+{% endblock %}
+
+{% block content %}
+  <div class="search_wrapper">
+    <h1>Buscando por "{{filter}}"</h1>
+
+    <section class="cards">
+
+      {% if filter != "" %} 
+
+        {% include "screens/recipe-fields.njk" %}
+
+      {% endif %}
+        
+    </section>
+  </div>
+{% endblock %}

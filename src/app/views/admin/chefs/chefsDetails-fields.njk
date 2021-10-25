@@ -1,0 +1,38 @@
+<section class="recipe-details">
+  <div class="avatar_recipe-details">
+    <div class="avatar_url" style="background-image: url({{avatar.src}})"></div>
+  </div>
+  <div class="chef_recipe-info">
+    <h3>{{chef.name}}</h3>
+    {% for total in count %}
+      {% if total.id == chef.id %}
+        {% if total.total_recipes >= 2 %}
+          <p>{{total.total_recipes}} receitas</p>
+        {% else %}
+          <p>{{total.total_recipes}} receita</p>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+<div class="wrapper__chef-details">
+  <h2>Receitas</h2>
+  <section class="cards-admin">
+    {% for recipe in recipes %}
+      {% if recipe.chef_id == chef.id %}
+        <div class="card-admin ">
+          <div class="card__image-container-admin">
+            <div style="background-image: url({{recipe.src}})"></div>
+          </div>
+          <div class="card__info-admin">
+            <h1>{{recipe.title}}</h1>
+            <p>por {{ chef.name }}</p>
+            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </section>
+</div>
+  

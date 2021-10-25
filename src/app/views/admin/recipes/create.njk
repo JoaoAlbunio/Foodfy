@@ -1,0 +1,23 @@
+{% extends "layout-admin.njk" %}
+
+{% block head %}
+  <title>Foodfy - Receita</title>
+{% endblock %}
+
+{% block content %}
+
+  <form id="formCreate" method="post" action="/admin/recipes" enctype="multipart/form-data">
+
+    <section class="create">
+      <div class="form-head">
+        <h1>Criando receita</h1>
+        <a class="cancelButton" href="/admin/recipes">Cancelar</a>
+        <button type="submit">Salvar receita</button>
+      </div>
+
+      {% include "admin/recipes/form-fields.njk" %}
+
+    </section>
+  </form>
+  
+{% endblock %}
