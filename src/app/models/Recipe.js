@@ -4,7 +4,9 @@ const { date } = require('../../lib/utils');
 module.exports = {
   all() {
     try {
-      return db.query(`SELECT * FROM recipes`);
+      return db.query(`
+        SELECT * FROM recipes
+        ORDER BY created_at DESC`);
 
     } catch (err) {
       console.log(err);
@@ -19,8 +21,9 @@ module.exports = {
           ingredients,
           preparation,
           information,
-          created_at
-        ) VALUES ($1, $2, $3, $4, $5, $6)
+          created_at,
+          updated_at
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7)
         RETURNING id
       `;
         
@@ -30,6 +33,7 @@ module.exports = {
         data.ingredients,
         data.preparation,
         data.information,
+        date(Date.now()).iso,
         date(Date.now()).iso
       ];
         
@@ -42,21 +46,6 @@ module.exports = {
   find(id) {
     try {
       return db.query(`SELECT * FROM recipes WHERE id = $1`, [id]);
-
-    } catch (err) {
-      console.log(err);
-    };
-  },
-  findBy(filter) { 
-    try {
-      return db.query(`
-        SELECT 
-        recipes.title, 
-        recipes.chef_id, 
-        recipes.id
-        FROM recipes
-        WHERE recipes.title ILIKE '%${filter}%'
-        ORDER BY title ASC`);
 
     } catch (err) {
       console.log(err);
@@ -109,6 +98,21 @@ module.exports = {
     try {
       return db.query(`SELECT * FROM files LEFT JOIN recipe_files ON (files.id = recipe_files.file_id) WHERE recipe_id = $1`, [id]);
       
+    } catch (err) {
+      console.log(err);
+    };
+  },
+  search(filter) { 
+    try {
+      return db.query(`
+        SELECT 
+        recipes.title, 
+        recipes.chef_id, 
+        recipes.id
+        FROM recipes
+        WHERE recipes.title ILIKE '%${filter}%'
+        ORDER BY updated_at DESC`);
+
     } catch (err) {
       console.log(err);
     };

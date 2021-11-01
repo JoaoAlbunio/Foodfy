@@ -6,24 +6,21 @@ module.exports = {
   async index(req, res) {
     let results = await Chef.all();
     const chefs = results.rows;
-    
-    const chefsPromises = (chefs) => {
-      return Promise.all(
-        chefs.map(async (chef) => {
-          const pathAvatar = await Chef.files(chef.file_id)
-          if (pathAvatar.rows != 0) {
-            return {
-              ...chef,
-              avatar_url: `${req.protocol}://${req.headers.host}${pathAvatar.rows[0].path.replace("public", "")}`
-            }
-          } else {
-            return chef;
-          }
-        })
-      )
-    };
 
-    const chefWithAvatar = await chefsPromises(chefs);
+    async function getImage(fileId) {
+      let results = await Chef.files(fileId);
+      const files = results.rows.map(file => `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`);
+      
+      return files[0];
+    };
+  
+    const chefsPromise = chefs.map(async chef => {
+      chef.avatar_url = await getImage(chef.file_id);
+  
+      return chef;
+    })
+  
+    const chefWithAvatar = await Promise.all(chefsPromise);
 
     return res.render("admin/chefs/index", { chefs: chefWithAvatar });
   },
@@ -61,23 +58,20 @@ module.exports = {
     results = await Chef.findRecipes();
     const recipes = results.rows;
 
-    const recipesPromises = (recipes) => {
-      return Promise.all(
-        recipes.map(async (recipe) => {
-          const pathImage = await Recipe.files(recipe.id)
-          if (pathImage.rows != 0) {
-            return  {
-              ...recipe,
-              src: `${req.protocol}://${req.headers.host}${pathImage.rows[0].path.replace("public", "")}`
-            }
-          } else {
-            return recipe
-          }
-        })
-      )
+    async function getImage(recipeId) {
+      let results = await Recipe.files(recipeId);
+      const files = results.rows.map(file => `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`);
+
+      return files[0];
     };
 
-    const recipesWithImage = await recipesPromises(recipes);
+    const recipesPromise = recipes.map(async recipe => {
+      recipe.src = await getImage(recipe.id);
+
+      return recipe;
+    });
+
+    const recipesWithImage = await Promise.all(recipesPromise);
 
     results = await Chef.files(chef.file_id);
     let avatar = results.rows[0];
